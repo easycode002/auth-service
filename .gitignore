@@ -3,3 +3,4 @@ build
 
 src/configs/.env.development
 src/configs/.env.production
+yarn.lock
