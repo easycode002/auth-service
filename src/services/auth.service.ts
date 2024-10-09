@@ -49,6 +49,7 @@ export class AuthService {
       .update(username + configs.awsCognitoClientId)
       .digest("base64");
   }
+  
   async signup(body: SignupRequest): Promise<string> {
     const username = (body.email || body.phone_number) as string;
     const params: SignUpCommandInput = {
@@ -70,8 +71,7 @@ export class AuthService {
   }
 
   async verifyUser(body: VerifyUserRequest): Promise<void> {
-    const username = (body.email ||
-      body.phone_number?.replace(/^\+/, "")) as string;
+    const username = (body.email) as string;
 
     const params = {
       ClientId: configs.awsCognitoClientId,
@@ -94,6 +94,9 @@ export class AuthService {
 
   async login(body: LoginRequest): Promise<CognitoToken> {
     const username = (body.email || body.phone_number) as string;
+
+    // Log to check username and password values
+    console.log("AuthService login() request body:", body);
 
     const params: InitiateAuthCommandInput = {
       AuthFlow: "USER_PASSWORD_AUTH",
