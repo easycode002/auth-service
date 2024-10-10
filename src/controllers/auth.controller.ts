@@ -1,6 +1,6 @@
-import { Body, Controller, Post, Route, Request, Tags } from "tsoa";
+import { Body, Controller, Post, Route, Request, Tags, Query, Get } from "tsoa";
 import AuthService, { SignupRequest } from "../services/auth.service";
-import setCookie from "../utils/cokie";
+import setCookie from "../utils/cookie";
 import { Response as ExpressResponse } from "express"; // Import Express types
 export default function sendResponse<T>({
   message,
@@ -82,5 +82,12 @@ export class ProductController extends Controller {
       console.error("Error in login method:", error);
       throw error;
     }
+  }
+
+  @Get("/google")
+  public loginWithGoogle(@Query() state:string){
+    console.log('state:',state)
+    const cognitoOAuthURL = AuthService.loginWithGoogle(state);
+    return sendResponse({message:"Login with Google successfully",data: cognitoOAuthURL})
   }
 }

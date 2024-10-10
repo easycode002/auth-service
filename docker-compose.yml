@@ -1,0 +1,27 @@
+version: "3.8"
+services:
+  auth-service:
+    container_name: auth_service_container
+    image: auth_service_image
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    restart: always
+    ports:
+      - 4001:4001
+    env_file: ./src/configs/.env.development
+    environment:
+      - DOCKER_ENV=true
+    volumes:
+      - auth_service:/app/src
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb_container
+    restart: always
+    ports: 
+      - 2717:27017
+    volumes:
+      - data:/data/db
+volumes:
+  auth_service:
+  data:

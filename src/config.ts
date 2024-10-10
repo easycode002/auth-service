@@ -11,6 +11,9 @@ type Config = {
   awsCognitoUserPoolId: string;
   awsCognitoClientId: string;
   awsCognitoClientSecret: string;
+
+  awsCognitoDomain: string;
+  awsRedirectUri: string;
 };
 
 // Function to load and validate environment variable
@@ -30,6 +33,9 @@ function loadConfig(): Config {
     COGNITO_USER_POOL_ID: Joi.string().required(),
     COGNITO_CLIENT_ID: Joi.string().required(),
     COGNITO_CLIENT_SECRET: Joi.string().required(),
+    AWS_COGNITO_DOMAIN: Joi.string().required(),
+    AWS_REDIRECT_URI: Joi.string().required(),
+
   })
     .unknown()
     .required();
@@ -49,6 +55,8 @@ function loadConfig(): Config {
     awsCognitoUserPoolId: envVars.COGNITO_USER_POOL_ID,
     awsCognitoClientId: envVars.COGNITO_CLIENT_ID,
     awsCognitoClientSecret: envVars.COGNITO_CLIENT_SECRET,
+    awsCognitoDomain: envVars.AWS_COGNITO_DOMAIN,
+    awsRedirectUri: envVars.AWS_REDIRECT_URI,
   };
 }
 

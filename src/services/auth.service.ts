@@ -121,5 +121,20 @@ export class AuthService {
       throw new Error(`Error verifying user: ${error}`);
     }
   }
+
+  loginWithGoogle(state:string):string{
+    const params = new URLSearchParams({
+      response_type: 'code',
+      client_id: configs.awsCognitoClientId,
+      redirect_uri: configs.awsRedirectUri,
+      identity_provider: 'Google',
+      scope: 'profile email openid',
+      state: state,
+      prompt: 'select_account'
+    })
+    const cognitoOAuthURL = `${configs.awsCognitoDomain}/oauth2/authorize?${params.toString()}`
+
+    return cognitoOAuthURL;
+  }
 }
 export default new AuthService();

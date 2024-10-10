@@ -8,7 +8,12 @@
     "dev": "yarn tsoa:gen && nodemon ./src/server.ts",
     "build": "node build-script.js",
     "start": "pm2 start ecosystem.config.js",
-    "start:local": "node ./build/server.js"
+    "restart": "pm2 restart ecosystem.config.js",
+    "stop": "pm2 stop ecosystem.config.js",
+    "start:local": "pm2 start ecosystem.config.local.js",
+    "restart:local": "pm2 restart ecosystem.config.local.js",
+    "stop:local": "pm2 stop ecosystem.config.local.js",
+    "start:pro-local": "node ./build/server.js"
   },
   "dependencies": {
     "@aws-sdk/client-cognito-identity-provider": "^3.666.0",
@@ -17,7 +22,8 @@
     "crypto": "^1.0.1",
     "dotenv": "^16.4.5",
     "express": "^4.21.0",
-    "joi": "^17.13.3"
+    "joi": "^17.13.3",
+    "pm2": "^5.4.2"
   },
   "devDependencies": {
     "@types/express": "^5.0.0",

@@ -19,11 +19,11 @@ WORKDIR /app
 COPY package.json ./
 RUN npm install --only=production
 
-# COPY THE BUILD APPLICATION FROM BUILD STAGE
+# Copy the built application from the build stage
 COPY --from=builder /app/build/ .
 
-# EXPOSE THE PORT THE APP RUN ON
+# Expose the port the app runs on
 EXPOSE 4001
 
-# COMMAND TO RUN THE APPLICATION
-CMD["node","server.js"]
+# Command to run the application
+CMD ["node", "server.js"]
