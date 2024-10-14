@@ -52,6 +52,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: build
+          path: ./build
 
       - name: Prepare Deployment Directories
         uses: appleboy/ssh-action@master
@@ -71,6 +72,6 @@ jobs:
           username: ${{ secrets.EC2_USERNAME }} # Update as per your setup
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
-          source: "./*"
+          source: "./build/*"
           target: "/home/ubuntu/auth-service/build"
           strip_components: 4
