@@ -11,7 +11,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -34,3 +34,42 @@ jobs:
         with:
           name: build
           path: ./apps/backend/api-gateway/build
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.ref == 'refs/heads/main'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.JS
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+        
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: build
+
+      - name: Prepare Deployment Directories
+        uses: appleboy/ssh-action@master
+        with:
+          host: 44.201.60.122
+          username: ubuntu
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          ports: 22
+          script: |
+            mkdir -p /home/ubuntu/auth-service/build
+            mkdir -p /home/ubuntu/auth-service/build/configs
+
+      - name: Copy files to EC2
+        uses: appleboy/scp-action@master
+        host: 44.201.60.122
+        username: ubuntu # Update as per your setup
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        port: 22
+        source: "./*"
+        target: "/home/ubuntu/auth-service/build"
+        strip_components: 4
