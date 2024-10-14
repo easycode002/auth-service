@@ -11,7 +11,6 @@ type Config = {
   awsCognitoUserPoolId: string;
   awsCognitoClientId: string;
   awsCognitoClientSecret: string;
-
   awsCognitoDomain: string;
   awsRedirectUri: string;
 };

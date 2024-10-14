@@ -1,4 +1,4 @@
-import { Body, Controller, Post, Route, Request, Tags, Query, Get } from "tsoa";
+import { Body, Controller, Post, Route, Request, Tags, Get, Query } from "tsoa";
 import AuthService, { SignupRequest } from "../services/auth.service";
 import setCookie from "../utils/cookie";
 import { Response as ExpressResponse } from "express"; // Import Express types
@@ -85,9 +85,20 @@ export class ProductController extends Controller {
   }
 
   @Get("/google")
-  public loginWithGoogle(@Query() state:string){
-    console.log('state:',state)
-    const cognitoOAuthURL = AuthService.loginWithGoogle(state);
-    return sendResponse({message:"Login with Google successfully",data: cognitoOAuthURL})
+  public loginWithGoogle(): string {
+    const googleLoginUrl = AuthService.getLoginUrl();
+    console.log(googleLoginUrl);
+    return googleLoginUrl; // Return the generated URL for the frontend to redirect
+  }
+
+  @Get("/callback")
+  public async handleCallback(@Query() code: string, @Query() state: string) {
+    try {
+      const data = await AuthService.handleCallback(code, state);
+      return sendResponse({ message: "Authentication successful", data });
+    } catch (error) {
+      console.error("Error in handleCallback method:", error);
+      throw error;
+    }
   }
 }

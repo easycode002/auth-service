@@ -200,10 +200,30 @@
 						"content": {
 							"application/json": {
 								"schema": {
+									"type": "string"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Authentication user"
+				],
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/v1/auth/callback": {
+			"get": {
+				"operationId": "HandleCallback",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
 									"properties": {
-										"data": {
-											"type": "string"
-										},
+										"data": {},
 										"message": {
 											"type": "string"
 										}
@@ -223,6 +243,14 @@
 				],
 				"security": [],
 				"parameters": [
+					{
+						"in": "query",
+						"name": "code",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
 					{
 						"in": "query",
 						"name": "state",

@@ -1,0 +1,34 @@
+name: CI/CD Pineline for Auth-service
+
+on: 
+  pull_request:
+    branches: 
+      - main
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Ensures all branches and tags are fetched
+      
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20" # Use the version of Node.js that your project requires
+     
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Run build
+        run: yarn build
+
+      - name: Archive build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: build
+          path: ./apps/backend/api-gateway/build

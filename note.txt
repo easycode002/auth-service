@@ -1,1 +1,5 @@
 password no need to store in db, so it must be store in cognito.
+
+https://sothea-google-auth.auth.ap-southeast-1.amazoncognito.com/oauth2/authorize?response_type=code&client_id=7apq5gr98qqgls5ucvan95dmk6&redirect_uri=https://sothea-google-auth.auth.ap-southeast-1.amazoncognito.com/oauth2/idpresponse&scope=openid+profile+email&state=x5v6ne
+
+table can fill form in react tailwind?
