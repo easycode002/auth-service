@@ -65,8 +65,8 @@ jobs:
             mkdir -p /home/ubuntu/auth-service/build/configs
 
       - name: Copy files to EC2
+        uses: appleboy/scp-action@master
         with:
-          uses: appleboy/scp-action@master
           host: ${{ secrets.EC2_IP }}
           username: ${{ secrets.EC2_USERNAME }} # Update as per your setup
           key: ${{ secrets.SSH_PRIVATE_KEY }}
