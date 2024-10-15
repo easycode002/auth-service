@@ -84,3 +84,7 @@ jobs:
           source: "./build/*"
           target: "/home/ubuntu/auth-service/build"
           strip_components: 4
+
+      # Debug data
+      - name: Debug build output
+        run: ls ./build && ls /home/ubuntu/auth-service/build
