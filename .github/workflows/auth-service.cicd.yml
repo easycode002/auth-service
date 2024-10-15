@@ -83,4 +83,4 @@ jobs:
           port: 22
           source: "./build/*"
           target: "/home/ubuntu/auth-service/build"
-          # strip_components: 4                   # Optional
+          strip_components: 1                   # Optional
