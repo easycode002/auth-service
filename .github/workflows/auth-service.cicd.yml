@@ -58,6 +58,10 @@ jobs:
         with:
           name: build
           path: ./build
+      
+      # Debug data
+      - name: Debug build output
+        run: ls ./build
 
       - name: Prepare Deployment Directories
         uses: appleboy/ssh-action@master
