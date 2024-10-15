@@ -83,11 +83,4 @@ jobs:
           port: 22
           source: "./build/*"
           target: "/home/ubuntu/auth-service/build"
-          strip_components: 4
-
-      # Debug data
-      - name: Debug build output
-        run: ls ./build 
-
-      - name: Debug build output
-        run: ls ./home/ubuntu/auth-service/build
+          # strip_components: 4                   # Optional
