@@ -69,7 +69,7 @@ jobs:
           host: ${{ secrets.EC2_IP }} # 44.201.60.122
           username: ${{ secrets.EC2_USERNAME }} # ubuntu
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          ports: 22
+          port: 22
           script: |
             mkdir -p /home/ubuntu/auth-service/build
             mkdir -p /home/ubuntu/auth-service/build/configs
@@ -84,6 +84,7 @@ jobs:
           source: "./build/*"
           target: "/home/ubuntu/auth-service/build"
           strip_components: 1                   # Optional
+
       - name: Create .env file
         uses: appleboy/ssh-action@master
         with:
