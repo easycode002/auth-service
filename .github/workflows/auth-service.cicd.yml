@@ -73,6 +73,6 @@ jobs:
           username: ${{ secrets.EC2_USERNAME }} # Update as per your setup
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
-          source: "./auth-service/build/*"
+          source: "./build/*"
           target: "/home/ubuntu/auth-service/build"
           strip_components: 4
