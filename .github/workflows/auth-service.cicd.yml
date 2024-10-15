@@ -99,3 +99,27 @@ jobs:
             echo "CLIENT_URL=${{ secrets.CLIENT_URL }}" >> /home/ubuntu/auth-service/build/configs/.env.production
             echo "AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}" >> /home/ubuntu/auth-service/build/configs/.env.production
             echo "AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> /home/ubuntu/auth-service/build/configs/.env.production
+
+      - name: Install Dependencies and Restart PM2
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.EC2_IP }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: 22
+          script: |
+            # Load the full user environment for non-interactive shells
+            source /home/ubuntu/.nvm/nvm.sh
+            source /home/ubuntu/.profile
+
+            cd /home/ubuntu/auth-service/build
+            yarn install --production
+
+            # Check if the PM2 process is running
+            if pm2 show auth-service > /dev/null; then
+              echo "Application is running. Restarting..."
+              yarn restart
+            else
+              echo "Application is not running. Starting..."
+              yarn start
+            fi
