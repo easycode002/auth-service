@@ -84,3 +84,17 @@ jobs:
           source: "./build/*"
           target: "/home/ubuntu/auth-service/build"
           strip_components: 1                   # Optional
+      - name: Create .env file
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.EC2_IP }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: 22
+          script: |
+            echo "NODE_ENV=${{ secrets.NODE_ENV }}" > /home/ubuntu/auth-service/build/configs/.env.production
+            echo "AWS_COGNITO_USER_POOL_ID=${{ secrets.AWS_COGNITO_USER_POOL_ID }}" >> /home/ubuntu/auth-service/build/configs/.env.production
+            echo "AWS_COGNITO_CLIENT_ID=${{ secrets.AWS_COGNITO_CLIENT_ID }}" >> /home/ubuntu/auth-service/build/configs/.env.production
+            echo "CLIENT_URL=${{ secrets.CLIENT_URL }}" >> /home/ubuntu/auth-service/build/configs/.env.production
+            echo "AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}" >> /home/ubuntu/auth-service/build/configs/.env.production
+            echo "AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> /home/ubuntu/auth-service/build/configs/.env.production
