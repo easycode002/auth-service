@@ -108,18 +108,29 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
           script: |
-            # Load the full user environment for non-interactive shells
-            source /home/ubuntu/.nvm/nvm.sh
-            source /home/ubuntu/.profile
+            # Install nvm, Node.js, yarn, and pm2 if not already installed
+            if [ ! -d "/home/ubuntu/.nvm" ]; then
+              echo "nvm is not installed. Installing nvm..."
+              curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.4/install.sh | bash
+              source /home/ubuntu/.nvm/nvm.sh
+              nvm install 20  # Install Node.js 20 if not already installed
+              nvm use 20
+              npm install -g yarn pm2  # Install yarn and pm2 globally
+            else
+              echo "nvm is already installed."
+              source /home/ubuntu/.nvm/nvm.sh
+              nvm use 20  # Use Node.js version 20
+            fi
 
+            # Proceed with the rest of the script
             cd /home/ubuntu/auth-service/build
             yarn install --production
 
-            # Check if the PM2 process is running
+            # Check if the PM2 process is running and restart or start the application
             if pm2 show auth-service > /dev/null; then
               echo "Application is running. Restarting..."
-              yarn restart
+              pm2 restart auth-service
             else
               echo "Application is not running. Starting..."
-              yarn start
+              pm2 start server.js --name auth-service
             fi
