@@ -87,4 +87,4 @@ jobs:
 
       # Debug data
       - name: Debug build output
-        run: ls ./build && ls /home/ubuntu/auth-service/build
+        run: ls ./build
