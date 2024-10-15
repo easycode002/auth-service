@@ -31,7 +31,7 @@ jobs:
 
       # Debugging step to verify build output
       - name: Debug build output
-        run: ls -al ./auth-service/build
+        run: ls -al ./build
       # - name: Archive build artifacts
       #   uses: actions/upload-artifact@v4
       #   with:
