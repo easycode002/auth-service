@@ -78,7 +78,7 @@ jobs:
         uses: appleboy/scp-action@master
         with:
           host: ${{ secrets.EC2_IP }}
-          username: ${{ secrets.EC2_USERNAME }} # Update as per your setup
+          username: ${{ secrets.EC2_USERNAME }} # Update as per your setup Sohtea Mab
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
           source: "./build/*"
